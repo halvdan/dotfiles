@@ -1,0 +1,14 @@
+background no
+out_to_x no
+out_to_console yes
+update_interval 1
+update_interval_on_battery 3
+
+TEXT
+${cpu cpu1}% | \
+${cpu cpu2}% | \
+${mem} | \
+${wireless_essid wlan0} \
+${wireless_link_qual wlan0} | \
+${battery BAT0} | \
+${time %b %d %Y / %H:%M}  
