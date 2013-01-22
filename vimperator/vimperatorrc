@@ -1,0 +1,3 @@
+noremap <C-a> i<C-a>
+noremap <C-c> i<C-c>
+noremap <C-v> i<C-v>
