@@ -18,9 +18,11 @@ modprobe radeon
 # turn off ATI card
 echo OFF > /sys/kernel/debug/vgaswitcheroo/switch
 
+
 case "$1" in
+  "") ;;
   "-v") cat /sys/kernel/debug/vgaswitcheroo/switch ;;
-  *) echo "Only argument -v available" ;;
+  *) echo "Only argument -v available" ;; 
 esac
 
 exit
