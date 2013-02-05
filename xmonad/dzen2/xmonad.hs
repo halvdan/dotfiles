@@ -13,6 +13,7 @@ import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ResizableTile
+import XMonad.Layout.Renamed
 
 import qualified XMonad.Actions.FlexibleResize as Flex
 import qualified XMonad.StackSet as W
@@ -21,7 +22,7 @@ import qualified Data.Map        as M
 
 main = do
   statusBar <- spawnPipe statusBar'
-  conkyBar0<- spawnPipe conkyBar0'
+  statusBar1 <- spawnPipe statusBar1'
   xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
     { terminal = terminal'
     , modMask = modMask'
@@ -62,10 +63,10 @@ layoutHook' = customLayout
 --                     }
 
 -- dzen2
-statusBar' = "dzen2 -y '0' -w '700' -ta 'l'" ++ dzenStyle
-dzenStyle  = " -h '17' -fg '#dddddd' -bg '#151515' -fn 'Montecarlo-10'"
+statusBar' = "dzen2 -y '0' -w '500' -ta 'l'" ++ dzenStyle
+dzenStyle  = " -h '10' -fg '#dddddd' -bg '#151515' -fn 'Montecarlo-10'"
 
-conkyBar0' = "conky -c ~/.xmonad/conkyrc | dzen2 -x '700' -w '600' -ta 'r'" ++ dzenStyle
+statusBar1' = "bash /home/dan/scripts/dzen2/statusbar.sh"
 
 
 customPP :: PP
@@ -74,7 +75,6 @@ customPP = defaultPP { ppCurrent = dzenColor "#C70404" ""
                      , ppTitle = dzenColor "#747474" "" . shorten 40
                      , ppLayout = dzenColor "#747474" ""
                      , ppSep = " | "
-                     , ppHiddenNoWindows = dzenColor "#585858" ""
                      , ppUrgent = dzenColor "#FFFFAF" "" . wrap "[" "]"
                      }
 
@@ -88,9 +88,13 @@ focusedBorderColor' = "#C70404"
 workspaces' :: [WorkspaceId]
 workspaces' = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
-customLayout = avoidStruts $ smartBorders tiled ||| smartBorders (Mirror tiled) ||| noBorders Full
-  where
-    tiled = ResizableTall 1 (2/100) (3/5) []
+-----------------------------------------------------------------------------------
+-- Layouts 
+tiled = renamed [Replace "T" ] $ smartBorders $ ResizableTall 1 0.03 0.618 []
+mtiled = renamed [Replace "MT"] $ smartBorders $ Mirror tiled
+full = renamed [Replace "F"] $ noBorders Full
+
+customLayout = avoidStruts $ tiled ||| mtiled ||| full
 
 -----------------------------------------------------------------------------------
 -- Terminal

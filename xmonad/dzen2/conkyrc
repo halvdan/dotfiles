@@ -5,10 +5,7 @@ update_interval 1
 update_interval_on_battery 3
 
 TEXT
-${cpu cpu1}% | \
-${cpu cpu2}% | \
-${mem} | \
-${wireless_essid wlan0} \
-${wireless_link_qual wlan0} | \
-${battery BAT0} | \
-${time %b %d %Y / %H:%M}  
+^fg(\#707070)^i(/home/dan/icons/sm4tik/note.xbm)^fg() ^fg(\#6666ff)${if_mpd_playing}^ca(1, mpc toggle)${mpd_smart}^ca() ^ca(1, mpc next)${mpd_elapsed}/${mpd_length}^ca()${else}^ca(1, mpd)mpd^ca()${endif}^fg() \
+^fg(\#707070)^i(/home/dan/icons/sm4tik/bat_full_01.xbm)^fg() ^fg(\#ffff66)${battery_percent BAT0}%^fg() \
+^fg(\#707070)^i(/home/dan/icons/sm4tik/wifi_02.xbm)^fg() ^fg(\#ffff66)${wireless_essid wlan0} ${wireless_link_qual wlan0}^fg() \
+^fg(\#707070)^i(/home/dan/icons/sm4tik/clock.xbm)^fg() ^fg(\#33ff44)${time %H:%M}^fg() \
