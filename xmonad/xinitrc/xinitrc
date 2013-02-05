@@ -1,0 +1,34 @@
+#!/bin/sh
+#
+#~/.xinitrc
+
+# Change keyboard layout to Swedish
+setxkbmap -layout se
+
+# Map caps lock to escape
+setxkbmap -option caps:escape
+
+# Load .Xresources
+xrdb ~/.Xresources
+
+# Change cursor to regular pointer
+xsetroot -cursor_name left_ptr
+
+# Transparency
+xcompmgr &
+
+# Yay, cut and paste
+autocutsel -fork &
+autocutsel -selection PRIMARY -fork &
+
+# Change background
+feh --bg-scale ~/pictures/bg/nBpoc.jpg
+
+# Trayer
+trayer --edge top --align right --widthtype pixel --width 66 --heighttype pixel --height 17 --SetPartialStrut false --expand true --transparent true --alpha 0 --tint 0x151515 &
+
+# Start dropbox
+dropbox start &
+
+# Launch xmonad
+exec xmonad
