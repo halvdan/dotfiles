@@ -62,10 +62,10 @@ layoutHook' = customLayout
 --                     }
 
 -- dzen2
-statusBar' = "dzen2 -y '0' -w '800' -ta 'l'" ++ dzenStyle
-dzenStyle  = " -h '14' -fg '#dddddd' -bg '#151515' -fn 'Montecarlo-10'"
+statusBar' = "dzen2 -y '0' -w '700' -ta 'l'" ++ dzenStyle
+dzenStyle  = " -h '17' -fg '#dddddd' -bg '#151515' -fn 'Montecarlo-10'"
 
-conkyBar0' = "conky -c ~/.xmonad/conkyrc | dzen2 -x '800' -ta 'r'" ++ dzenStyle
+conkyBar0' = "conky -c ~/.xmonad/conkyrc | dzen2 -x '700' -w '600' -ta 'r'" ++ dzenStyle
 
 
 customPP :: PP
