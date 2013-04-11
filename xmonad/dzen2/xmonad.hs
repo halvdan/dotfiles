@@ -11,6 +11,8 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
 import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Util.Run(spawnPipe)
+import XMonad.Util.Scratchpad (scratchpadManageHook, scratchpadSpawnActionCustom)
+import XMonad.Util.NamedScratchpad
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Renamed
@@ -39,8 +41,12 @@ main = do
 -----------------------------------------------------------------------------------
 -- hooks
 
+manageScratchPad :: ManageHook
+manageScratchPad = scratchpadManageHook (W.RationalRect (1/7) (1/10) (2/5) (4/9))
+scratchPad = scratchpadSpawnActionCustom "urxvt -name scratchpad"
+
 manageHook' :: ManageHook
-manageHook' = (doF W.swapDown) <+> manageHook defaultConfig <+> manageDocks
+manageHook' = (doF W.swapDown) <+> manageHook defaultConfig <+> manageDocks <+> manageScratchPad
 
 logHook' :: Handle -> X ()
 logHook' h = dynamicLogWithPP $ customPP { ppOutput = hPutStrLn h }
@@ -82,8 +88,8 @@ borderWidth' :: Dimension
 borderWidth' = 2
 
 normalBorderColor', focusedBorderColor' :: String
-normalBorderColor' = "#222222"
-focusedBorderColor' = "#C70404"
+normalBorderColor' = "#1c1c1c"
+focusedBorderColor' = "#444444"
 
 workspaces' :: [WorkspaceId]
 workspaces' = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
@@ -114,6 +120,7 @@ keys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
     , ((modm,               xK_p     ), spawn "dmenu_run -b -nb black -nf white -sb black -sf \"#C70404\"")
     , ((modm .|. shiftMask, xK_c     ), kill)
+    , ((modm .|. shiftMask, xK_s    ), scratchPad)
 
     -- shortcuts
     , ((modm, xK_f), spawn "firefox")
