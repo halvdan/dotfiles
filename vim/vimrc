@@ -28,6 +28,9 @@ Bundle "snipmate-snippets"
 " vim-snipmate
 Bundle 'garbas/vim-snipmate.git'
 
+" vim-colors
+Bundle 'flazz/vim-colorschemes'
+
 filetype plugin indent on
 
 let mapleader = ","
@@ -116,6 +119,16 @@ let NERDTreeIgnore = ['.vim$', '\~$', '.*\.pyc$', 'whoosh_index', '.*.pid',
 
 "nnoremap <F5> :GundoToggle<cr>
 "inoremap <F5> <esc>:GundoToggle<cr>
+
+"" TIME TO LEARN
+noremap <Up> <nop>
+noremap <Down> <nop>
+noremap <Left> <nop>
+noremap <Right> <nop>
+inoremap <Up> <nop>
+inoremap <Down> <nop>
+inoremap <Left> <nop>
+inoremap <Right> <nop>
 
 "" Colors
 colorscheme badwolf
