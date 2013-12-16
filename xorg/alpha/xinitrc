@@ -1,0 +1,33 @@
+#!/bin/sh
+#
+#~/.xinitrc
+
+# Change keyboard layout to Swedish
+setxkbmap -layout se
+
+# Map caps lock to escape
+setxkbmap -option caps:escape
+
+# Load .Xresources
+xrdb ~/.Xresources
+
+# Change cursor to regular pointer
+xsetroot -cursor_name left_ptr
+
+# Transparency
+xcompmgr &
+
+# Trayer
+trayer --edge top --align right --widthtype pixel --width 66 --heighttype pixel --height 16 --SetPartialStrut false --expand true --transparent true --alpha 0 --tint 0x151515 &
+
+eval $(cat ~/.fehbg) &
+
+# Start dropbox
+dropboxd &
+
+loliclip &
+
+(sleep 2 && redshift -l 57.69:11.98 -t 6500:4300 -g 0.8 -m vidmode -v) &
+
+# Launch xmonad
+exec xmonad
