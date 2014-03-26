@@ -3,7 +3,8 @@ import System.Exit
 import System.IO
 
 import XMonad
-import XMonad.Actions.CycleWindows -- alt-tab
+import XMonad.Actions.CycleWindows
+import XMonad.Actions.CycleWS
 import XMonad.Actions.MouseGestures
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
@@ -49,7 +50,7 @@ manageScratchPad = scratchpadManageHook (W.RationalRect (1/7) (1/10) (2/5) (4/9)
 scratchPad = scratchpadSpawnActionCustom "urxvt -name scratchpad"
 
 manageHook' :: ManageHook
-manageHook' = (doF W.swapDown) <+> manageHook defaultConfig <+> manageDocks <+> manageScratchPad 
+manageHook' = (doF W.swapDown) <+> manageHook defaultConfig <+> manageDocks <+> manageScratchPad <+> manageFloats
 
 logHook' :: Handle -> X ()
 logHook' h = dynamicLogWithPP $ customPP { ppOutput = hPutStrLn h }
@@ -58,7 +59,15 @@ layoutHook' = customLayout
 
 startupHook' = setWMName "LG3D"
 
+manageFloats = composeAll $ concat
+  [[ title =? t --> doFloat | t <- floatByTitle]
+  ,[className =? c --> doFloat | c <- floatByClass]
+  ]
 
+floatByTitle = [ "first" ]
+floatByClass = [ "gimp" ]
+
+-----------------------------------------------------------------------------------
 -- looks
 
 statusBar' = "dzen2 -y '0' -w '810' -ta 'l'" ++ dzenStyle
@@ -77,7 +86,7 @@ customPP = defaultPP { ppCurrent = dzenColor "#dddddd" ""
                      }
 
 borderWidth' :: Dimension
-borderWidth' = 2
+borderWidth' = 10
 
 normalBorderColor', focusedBorderColor' :: String
 normalBorderColor' = "#1c1c1c"
@@ -120,8 +129,9 @@ keys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_s), spawn "spotify")
 
     -- layouts
-    , ((modm,               xK_space ), sendMessage NextLayout)
-    , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
+    , ((modm,               xK_space ), toggleWS)
+    , ((modm,               xK_e     ), sendMessage NextLayout)
+    , ((modm .|. shiftMask, xK_e     ), setLayout $ XMonad.layoutHook conf)
     , ((modm              , xK_b     ), sendMessage ToggleStruts)
 
     -- floating layer
