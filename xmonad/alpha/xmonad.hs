@@ -3,7 +3,8 @@ import System.Exit
 import System.IO
 
 import XMonad
-import XMonad.Actions.CycleWindows -- alt-tab
+import XMonad.Actions.CycleWindows
+import XMonad.Actions.CycleWS
 import XMonad.Actions.MouseGestures
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
@@ -58,9 +59,9 @@ layoutHook' = customLayout
 
 startupHook' = setWMName "LG3D"
 
-manageFloats = composeAll 
-  [ title =? t --> doFloat | t <- floatByTitle 
-  , className =? c --> doFloat | c <- floatByClass
+manageFloats = composeAll $ concat
+  [[ title =? t --> doFloat | t <- floatByTitle]
+  ,[className =? c --> doFloat | c <- floatByClass]
   ]
 
 floatByTitle = [ "first" ]
@@ -128,8 +129,9 @@ keys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_s), spawn "spotify")
 
     -- layouts
-    , ((modm,               xK_space ), sendMessage NextLayout)
-    , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
+    , ((modm,               xK_space ), toggleWS)
+    , ((modm,               xK_e     ), sendMessage NextLayout)
+    , ((modm .|. shiftMask, xK_e     ), setLayout $ XMonad.layoutHook conf)
     , ((modm              , xK_b     ), sendMessage ToggleStruts)
 
     -- floating layer
