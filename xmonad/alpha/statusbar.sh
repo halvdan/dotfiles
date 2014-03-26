@@ -47,6 +47,11 @@ network(){
   echo $percent%
 }
 
+network_profile(){
+  profile=$(netctl list | awk '/*/ {print $2}')
+  echo $profile
+}
+
 volume(){
   vol=$(amixer get Master | egrep -o "[0-9]+%")
   echo "^ca(1, amixer -q set Master 3%-)^ca(3, amixer -q set Master 3%+)^ca(2, amixer -q set Master toggle)$vol^ca()^ca()^ca()"
@@ -56,6 +61,7 @@ while :; do
   #echo -n "$(icon $ICON_NOW_PLAYING) $(now_playing)$SEP"
   echo -n "$(battery)$SEP"
   echo -n "$(icon $ICON_NETWORK) ^fg($COLOR_NETWORK)$(network)^fg()$SEP"
+  echo -n "^fg($COLOR_NETWORK)$(network_profile)^fg()$SEP"
   echo "$(icon $ICON_VOLUME) ^fg($COLOR_VOLUME)$(volume)^fg()$SEP"
   sleep 5
 done | dzen2 -x $X -y $Y -ta $TA -h $HEIGHT -w $WIDTH -fg $FG -bg $BG -fn $FONT
