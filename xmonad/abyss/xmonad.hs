@@ -6,6 +6,7 @@ import XMonad
 import XMonad.Actions.CycleWindows
 import XMonad.Actions.CycleWS
 import XMonad.Actions.MouseGestures
+import XMonad.Actions.PhysicalScreens
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
@@ -60,12 +61,12 @@ layoutHook' = customLayout
 startupHook' = setWMName "LG3D"
 
 manageFloats = composeAll $ concat
-  [[ title =? t --> doFloat | t <- floatByTitle]
-  ,[className =? c --> doFloat | c <- floatByClass]
+  [[ title =? t --> doFloat | t <- floatByTitle ]
+  ,[ className =? c --> doFloat | c <- floatByClass ]
   ]
 
-floatByTitle = [ "first" ]
-floatByClass = [ "gimp" ]
+floatByTitle = [ "first", "Drop", "asd" ]
+floatByClass = [ "gimp", "MyChain" ]
 
 -----------------------------------------------------------------------------------
 -- looks
@@ -122,7 +123,13 @@ keys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_p     ), spawn "dmenu_run")
     , ((modm,               xK_o     ), spawn "lolictrl")
     , ((modm .|. shiftMask, xK_c     ), kill)
-    , ((modm .|. shiftMask, xK_s    ), scratchPad)
+    , ((modm .|. shiftMask, xK_s     ), scratchPad)
+
+    -- screens
+    , ((modm, 	    	    xK_a     ), onPrevNeighbour W.view)
+    , ((modm, 	    	    xK_d     ), onNextNeighbour W.view)
+    , ((modm .|. shiftMask, xK_a     ), onPrevNeighbour W.shift)
+    , ((modm .|. shiftMask, xK_d     ), onNextNeighbour W.shift)
 
     -- shortcuts
     , ((modm, xK_f), spawn "firefox")
