@@ -31,8 +31,20 @@ volume(){
   echo "^ca(1, amixer -q set Master 3%-)^ca(3, amixer -q set Master 3%+)^ca(2, amixer -q set Master toggle)$vol^ca()^ca()^ca()"
 }
 
+keyboard(){
+  current=$(xkb-switch)
+  if [ $current == "us" ]
+  then
+    echo "^ca(1, setxkbmap -layout se)$current^ca()"
+  else
+    echo "^ca(1, setxkbmap -layout us)$current^ca()"
+  fi
+}
+
+
 while :; do
   #echo -n "$(icon $ICON_NOW_PLAYING) $(now_playing)$SEP"
+  echo -n "^fg($COLOR_VOLUME)$(keyboard)^fg()$SEP"
   echo "$(icon $ICON_VOLUME) ^fg($COLOR_VOLUME)$(volume)^fg()$SEP"
   sleep 5
 done | dzen2 -x $X -y $Y -ta $TA -h $HEIGHT -w $WIDTH -fg $FG -bg $BG -fn $FONT
