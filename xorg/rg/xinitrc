@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+#~/.xinitrc
+
+setxkbmap -option caps:escape
+xrdb ~/.Xresources
+xsetroot -cursor_name left_ptr
+xcompmgr &
+trayer --edge top --align right --widthtype pixel --width 122 --heighttype pixel --height 16 --SetPartialStrut false --expand true --transparent true --alpha 0 --tint 0x151515 &
+dropbox start -i &
+xscreensaver -no-splash &
+xset m 0 0 &
+
+exec xmonad
