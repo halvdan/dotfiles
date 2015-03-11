@@ -1,0 +1,44 @@
+URxvt*depth: 32
+URxvt.background: rgba:0000/0000/0000/dddd
+URxvt.foreground: White
+
+URxvt.font: xft:Bitstream Vera Sans Mono:pixelsize=12
+
+URxvt.loginShell: true
+URxvt.scrollBar: false
+URxvt.urgentOnBell: true
+URxvt*termName: rxvt-unicode
+
+URxvt.url-select.launcher: /usr/bin/firefox -new-tab
+URxvt.url-select.underline: true
+
+URxvt*keysym.Home: \033[1~
+URxvt*keysym.End: \033[4~
+
+URxvt*background: #161616
+URxvt.cursorColor: #FDA53C
+
+!black
+*color0: #222222
+*color8: #666666
+!red
+*color1: #E84F4F
+*color9: #D23D3D
+!green
+*color2: #B7CE42
+*color10: #BDE077
+!yellow
+*color3: #FEA63C
+*color11: #FFE863
+!blue
+*color4: #66AABB
+*color12: #AACCBB
+!magenta
+*color5: #B7416E
+*color13: #E16A98
+!cyan
+*color6: #6D878D
+*color14: #42717B
+!white
+*color7: #DDDDDD
+*color15: #CCCCCC
