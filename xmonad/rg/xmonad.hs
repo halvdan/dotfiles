@@ -46,7 +46,7 @@ main = do
 -- hooks
 
 manageScratchPad :: ManageHook
-manageScratchPad = scratchpadManageHook (W.RationalRect (1/7) (1/10) (2/5) (4/9))
+manageScratchPad = scratchpadManageHook (W.RationalRect (1/3) (1/3) (1/3) (1/3))
 scratchPad = scratchpadSpawnActionCustom "urxvt -name scratchpad"
 
 manageHook' :: ManageHook
@@ -119,7 +119,6 @@ keys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- launching + killing
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
     , ((modm,               xK_p     ), spawn "dmenu_run")
-    , ((modm,               xK_o     ), spawn "lolictrl")
     , ((modm .|. shiftMask, xK_c     ), kill)
     , ((modm .|. shiftMask, xK_s     ), scratchPad)
 
@@ -130,7 +129,6 @@ keys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_d     ), onNextNeighbour W.shift)
 
     -- shortcuts
-    , ((modm, xK_f), spawn "firefox")
     , ((modm, xK_s), spawn "spotify")
 
     -- layouts
