@@ -130,6 +130,8 @@ keys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- shortcuts
     , ((modm, xK_s), spawn "spotify")
+    , ((modm, xK_F9), spawn "setxkbmap -layout se")
+    , ((modm, xK_F10), spawn "setxkbmap -layout us")
 
     -- layouts
     , ((modm,               xK_space ), toggleWS)
