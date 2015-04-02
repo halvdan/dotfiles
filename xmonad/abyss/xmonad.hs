@@ -31,7 +31,6 @@ main = do
   statusBar2 <- spawnPipe statusBar2'
   xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
     { terminal = terminal'
-    , modMask = modMask'
     , workspaces = workspaces'
     , borderWidth = borderWidth'
     , normalBorderColor = normalBorderColor'
@@ -113,8 +112,6 @@ terminal' = "urxvt"
 -----------------------------------------------------------------------------------
 -- Keys/button bindings
 
-modMask' :: KeyMask
-modMask' = mod4Mask
 
 keys' :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
 keys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
