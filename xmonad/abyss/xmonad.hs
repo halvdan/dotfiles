@@ -31,6 +31,7 @@ main = do
   statusBar2 <- spawnPipe statusBar2'
   xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
     { terminal = terminal'
+    , modMask = modMask'
     , workspaces = workspaces'
     , borderWidth = borderWidth'
     , normalBorderColor = normalBorderColor'
@@ -79,14 +80,14 @@ statusBar2' = "bash /home/dan/dotfiles/xmonad/abyss/statusbar.sh"
 customPP :: PP
 customPP = defaultPP { ppCurrent = dzenColor "#dddddd" ""
                      , ppVisible = dzenColor "#888888" "" . wrap "-" "-"
-                     , ppTitle = dzenColor "#747474" "" . shorten 40
+                     , ppTitle = dzenColor "#747474" "" . shorten 90
                      , ppLayout = dzenColor "#747474" ""
                      , ppSep = " | "
                      , ppUrgent = dzenColor "#FFFFAF" "" . wrap "[" "]"
                      }
 
 borderWidth' :: Dimension
-borderWidth' = 10
+borderWidth' = 0
 
 normalBorderColor', focusedBorderColor' :: String
 normalBorderColor' = "#1c1c1c"
@@ -112,6 +113,8 @@ terminal' = "urxvt"
 -----------------------------------------------------------------------------------
 -- Keys/button bindings
 
+modMask' :: KeyMask
+modMask' = mod4Mask
 
 keys' :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
 keys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
