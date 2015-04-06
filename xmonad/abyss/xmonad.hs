@@ -27,7 +27,6 @@ import qualified Data.Map        as M
 
 main = do
   statusBar <- spawnPipe statusBar'
-  statusBar1 <- spawnPipe statusBar1'
   statusBar2 <- spawnPipe statusBar2'
   xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
     { terminal = terminal'
@@ -71,10 +70,9 @@ floatByClass = [ "gimp", "MyChain" ]
 -----------------------------------------------------------------------------------
 -- looks
 
-statusBar' = "dzen2 -y '0' -w '810' -ta 'l'" ++ dzenStyle
+statusBar' = "dzen2 -y '0' -w '800' -ta 'l'" ++ dzenStyle
 dzenStyle  = " -h '16' -fg '#888888' -bg '#151515' -fn 'Montecarlo-10'"
 
-statusBar1' = "bash /home/dan/dotfiles/xmonad/abyss/clock.sh"
 statusBar2' = "bash /home/dan/dotfiles/xmonad/abyss/statusbar.sh"
 
 customPP :: PP

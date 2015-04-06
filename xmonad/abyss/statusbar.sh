@@ -1,18 +1,20 @@
-X=976
+X=800
 Y=0
 TA="right"
 HEIGHT=16
-WIDTH=744
+WIDTH=920
 FG="#dddddd"
 BG="#151515"
 FONT="Montecarlo-10"
 
-BATTERY_CRITICAL=10
-SEP=" "
+SEP="   "
 
 COLOR_ICON="#707070"
 COLOR_NOW_PLAYING="#bbbbbb"
+
+COLOR_KEYBOARD="#bbbbbb"
 COLOR_VOLUME="#bbbbbb"
+COLOR_CLOCK="#bbbbbb"
 
 ICON_NOW_PLAYING="/home/dan/dotfiles/icons/sm4tik/note.xbm"
 ICON_VOLUME="/home/dan/dotfiles/icons/sm4tik/spkr_01.xbm"
@@ -41,10 +43,14 @@ keyboard(){
   fi
 }
 
+clock(){
+  echo $(date +%H:%M)
+}
+
 
 while :; do
-  #echo -n "$(icon $ICON_NOW_PLAYING) $(now_playing)$SEP"
-  echo -n "^fg($COLOR_VOLUME)$(keyboard)^fg()$SEP"
-  echo "$(icon $ICON_VOLUME) ^fg($COLOR_VOLUME)$(volume)^fg()$SEP"
+  echo -n "^fg($COLOR_KEYBOARD)$(keyboard)^fg()$SEP"
+  echo -n "$(icon $ICON_VOLUME) ^fg($COLOR_VOLUME)$(volume)^fg()$SEP"
+  echo "^fg($COLOR_CLOCK) $(clock)^fg()$SEP"
   sleep 5
 done | dzen2 -x $X -y $Y -ta $TA -h $HEIGHT -w $WIDTH -fg $FG -bg $BG -fn $FONT
