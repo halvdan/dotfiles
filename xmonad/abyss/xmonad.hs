@@ -46,7 +46,7 @@ main = do
 -- hooks
 
 manageScratchPad :: ManageHook
-manageScratchPad = scratchpadManageHook (W.RationalRect (1/7) (1/10) (2/5) (4/9))
+manageScratchPad = scratchpadManageHook (W.RationalRect (1/3) (1/3) (1/3) (1/3))
 scratchPad = scratchpadSpawnActionCustom "urxvt -name scratchpad"
 
 manageHook' :: ManageHook
@@ -134,7 +134,7 @@ keys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_s), spawn "spotify")
 
     -- layouts
-    , ((modm,               xK_space ), toggleWS)
+    , ((modm,               xK_space ), toggleWS' ["NSP"])
     , ((modm,               xK_e     ), sendMessage NextLayout)
     , ((modm .|. shiftMask, xK_e     ), setLayout $ XMonad.layoutHook conf)
     , ((modm              , xK_b     ), sendMessage ToggleStruts)
