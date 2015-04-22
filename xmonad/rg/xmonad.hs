@@ -112,7 +112,7 @@ terminal' = "urxvt"
 -- Keys/button bindings
 
 modMask' :: KeyMask
-modMask' = mod1Mask
+modMask' = mod4Mask
 
 keys' :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
 keys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
@@ -134,7 +134,7 @@ keys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_F10), spawn "setxkbmap -layout us")
 
     -- layouts
-    , ((modm,               xK_space ), toggleWS)
+    , ((modm,               xK_space ), toggleWS' ["NSP"])
     , ((modm,               xK_e     ), sendMessage NextLayout)
     , ((modm .|. shiftMask, xK_e     ), setLayout $ XMonad.layoutHook conf)
     , ((modm              , xK_b     ), sendMessage ToggleStruts)
