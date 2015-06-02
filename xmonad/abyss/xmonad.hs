@@ -70,7 +70,7 @@ floatByClass = [ "gimp", "MyChain" ]
 -----------------------------------------------------------------------------------
 -- looks
 
-statusBar' = "dzen2 -y '0' -w '800' -ta 'l'" ++ dzenStyle
+statusBar' = "dzen2 -xs 1 -y '0' -w '800' -ta 'l'" ++ dzenStyle
 dzenStyle  = " -h '16' -fg '#888888' -bg '#151515' -fn 'Montecarlo-10'"
 
 statusBar2' = "bash /home/dan/dotfiles/xmonad/abyss/statusbar.sh"
