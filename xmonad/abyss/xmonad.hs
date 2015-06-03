@@ -12,6 +12,7 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.SetWMName
+import XMonad.Hooks.InsertPosition
 import XMonad.Util.EZConfig
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.Scratchpad (scratchpadManageHook, scratchpadSpawnActionCustom)
@@ -19,6 +20,7 @@ import XMonad.Util.NamedScratchpad
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Renamed
+import XMonad.Layout.Tabbed
 
 import qualified XMonad.Actions.FlexibleResize as Flex
 import qualified XMonad.StackSet as W
@@ -59,18 +61,17 @@ layoutHook' = customLayout
 
 startupHook' = setWMName "LG3D"
 
-manageFloats = composeAll $ concat
-  [[ title =? t --> doFloat | t <- floatByTitle ]
-  ,[ className =? c --> doFloat | c <- floatByClass ]
-  ]
-
-floatByTitle = [ "first", "Drop", "asd" ]
-floatByClass = [ "gimp", "MyChain" ]
+manageFloats = composeAll [ isFullscreen --> doFullFloat
+                          , className =? "MPlayer" --> doFloat
+                          , className =? "mplayer2" --> doFloat
+                          , className =? "Gimp" --> doFloat
+                          , insertPosition Below Newer
+                          ]
 
 -----------------------------------------------------------------------------------
 -- looks
 
-statusBar' = "dzen2 -y '0' -w '800' -ta 'l'" ++ dzenStyle
+statusBar' = "dzen2 -xs 1 -y '0' -w '800' -ta 'l'" ++ dzenStyle
 dzenStyle  = " -h '16' -fg '#888888' -bg '#151515' -fn 'Montecarlo-10'"
 
 statusBar2' = "bash /home/dan/dotfiles/xmonad/abyss/statusbar.sh"
@@ -80,7 +81,7 @@ customPP = defaultPP { ppCurrent = dzenColor "#dddddd" ""
                      , ppVisible = dzenColor "#888888" "" . wrap "-" "-"
                      , ppTitle = dzenColor "#747474" "" . shorten 90
                      , ppLayout = dzenColor "#747474" ""
-                     , ppSep = " | "
+                     , ppSep = dzenColor "#444444" "" " | "
                      , ppUrgent = dzenColor "#FFFFAF" "" . wrap "[" "]"
                      }
 
@@ -96,11 +97,19 @@ workspaces' = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
 -----------------------------------------------------------------------------------
 -- Layouts 
-tiled = renamed [Replace "T" ] $ smartBorders $ ResizableTall 1 0.03 0.618 []
-mtiled = renamed [Replace "MT"] $ smartBorders $ Mirror tiled
-full = renamed [Replace "F"] $ noBorders Full
+tiled = renamed [Replace "[]=" ] $ smartBorders $ ResizableTall 1 (2/100) (1/2) []
+mtiled = renamed [Replace "=[]"] $ smartBorders $ Mirror tiled
+full = renamed [Replace "[]"] $ noBorders Full
+tab = renamed [Replace "T"] $ noBorders $ tabbed shrinkText tabTheme1
 
-customLayout = avoidStruts $ tiled ||| mtiled ||| full
+tabTheme1 = defaultTheme { decoHeight = 16
+                         , activeColor = "#a6c292"
+                         , activeBorderColor = "#a6c292"
+                         , activeTextColor = "#000000"
+                         , inactiveBorderColor = "#000000"
+                         }
+
+customLayout = avoidStruts $ tiled ||| mtiled ||| tab ||| full
 
 -----------------------------------------------------------------------------------
 -- Terminal

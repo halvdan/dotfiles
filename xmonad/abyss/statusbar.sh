@@ -1,4 +1,4 @@
-X=800
+X=2080
 Y=0
 TA="right"
 HEIGHT=16
