@@ -128,7 +128,7 @@ keys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- launching + killing
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
     , ((modm,               xK_p     ), spawn "dmenu_run")
-    , ((modm,               xK_o     ), spawn "lolictrl")
+    , ((modm,               xK_o     ), spawn "xcmenuctrl")
     , ((modm .|. shiftMask, xK_c     ), kill)
     , ((modm .|. shiftMask, xK_s     ), scratchPad)
 

@@ -6,7 +6,7 @@ setxkbmap -option caps:escape
 xsetroot -cursor_name left_ptr
 xset m 1 0
 xcompmgr &
-loliclip &
+xcmenu &
 dropbox &
 trayer --edge top --align right --widthtype pixel --width 200 --heighttype pixel --height 16 --SetPartialStrut false --expand true --transparent true --alpha 0 --tint 0x151515 --monitor primary &
 feh  --bg-scale '/home/dan/downloads/bGzjG8g.jpg' &
