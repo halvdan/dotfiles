@@ -34,7 +34,7 @@ volume(){
 }
 
 keyboard(){
-  current=$(xkb-switch)
+  current=$(setxkbmap -query | grep layout | sed 's/ //g' | cut -d':' -f2)
   if [ $current == "us" ]
   then
     echo "^ca(1, setxkbmap -layout se)$current^ca()"
@@ -52,5 +52,5 @@ while :; do
   echo -n "^fg($COLOR_KEYBOARD)$(keyboard)^fg()$SEP"
   echo -n "$(icon $ICON_VOLUME) ^fg($COLOR_VOLUME)$(volume)^fg()$SEP"
   echo "^fg($COLOR_CLOCK) $(clock)^fg()$SEP"
-  sleep 5
+  sleep 1
 done | dzen2 -x $X -y $Y -ta $TA -h $HEIGHT -w $WIDTH -fg $FG -bg $BG -fn $FONT
