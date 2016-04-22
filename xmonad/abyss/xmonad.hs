@@ -65,6 +65,7 @@ manageFloats = composeAll [ isFullscreen --> doFullFloat
                           , className =? "MPlayer" --> doFloat
                           , className =? "mplayer2" --> doFloat
                           , className =? "Gimp" --> doFloat
+                          , className =? "dev" --> doFloat
                           , insertPosition Below Newer
                           ]
 
