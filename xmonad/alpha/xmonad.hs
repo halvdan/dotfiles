@@ -6,6 +6,7 @@ import XMonad
 import XMonad.Actions.CycleWindows
 import XMonad.Actions.CycleWS
 import XMonad.Actions.MouseGestures
+import XMonad.Actions.PhysicalScreens
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
@@ -123,6 +124,12 @@ keys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_o     ), spawn "lolictrl")
     , ((modm .|. shiftMask, xK_c     ), kill)
     , ((modm .|. shiftMask, xK_s    ), scratchPad)
+
+    -- screens
+    , ((modm,                xK_a     ), onPrevNeighbour W.view)
+    , ((modm,                xK_d     ), onNextNeighbour W.view)
+    , ((modm .|. shiftMask, xK_a     ), onPrevNeighbour W.shift)
+    , ((modm .|. shiftMask, xK_d     ), onNextNeighbour W.shift)
 
     -- shortcuts
     , ((modm, xK_f), spawn "firefox")
