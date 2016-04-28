@@ -49,7 +49,7 @@ main = do
 
 manageScratchPad :: ManageHook
 manageScratchPad = scratchpadManageHook (W.RationalRect (1/3) (1/3) (1/3) (1/3))
-scratchPad = scratchpadSpawnActionCustom "urxvt -name scratchpad"
+scratchPad = scratchpadSpawnActionCustom "termite --name=scratchpad"
 
 manageHook' :: ManageHook
 manageHook' = (doF W.swapDown) <+> manageHook defaultConfig <+> manageDocks <+> manageScratchPad <+> manageFloats
@@ -116,7 +116,7 @@ customLayout = avoidStruts $ tiled ||| mtiled ||| tab ||| full
 -- Terminal
 
 terminal' :: String
-terminal' = "urxvt"
+terminal' = "termite"
 
 -----------------------------------------------------------------------------------
 -- Keys/button bindings
