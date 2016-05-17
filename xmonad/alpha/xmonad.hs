@@ -87,7 +87,7 @@ customPP = defaultPP { ppCurrent = dzenColor "#dddddd" ""
                      }
 
 borderWidth' :: Dimension
-borderWidth' = 2
+borderWidth' = 0
 
 normalBorderColor', focusedBorderColor' :: String
 normalBorderColor' = "#1c1c1c"
