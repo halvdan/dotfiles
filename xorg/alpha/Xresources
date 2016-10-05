@@ -2,7 +2,7 @@ URxvt*depth: 32
 URxvt.background: rgba:0000/0000/0000/dddd
 URxvt.foreground: White
 
-URxvt.font: xft:Inconsolata:pixelsize=12
+URxvt.font: xft:DejaVu Sans Mono for Powerline:pixelsize=12
 
 URxvt.loginShell: true
 URxvt.scrollBar: false
