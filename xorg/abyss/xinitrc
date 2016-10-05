@@ -1,15 +1,15 @@
 #!/bin/sh
 
 xrandr --output DVI-D-0 --mode 1280x1024 --pos 0x0 --rotate normal --output HDMI-0 --off --output DVI-I-1 --primary --mode 1920x1200 --pos 1280x0 --rotate normal&
-xrdb ~/.Xresources
 setxkbmap -option caps:escape
 xsetroot -cursor_name left_ptr
 xset m 1 0
-xcompmgr &
+compton &
 xcmenu &
 dropbox &
 dunst &
 trayer --edge top --align right --widthtype pixel --width 200 --heighttype pixel --height 16 --SetPartialStrut false --expand true --transparent true --alpha 0 --tint 0x151515 --monitor primary &
+pasystray &
 feh  --bg-scale '/home/dan/downloads/bGzjG8g.jpg' &
 (sleep 2 && redshift -l 57.69:11.98 -t 6500:4300 -g 0.8 -m vidmode -v) &
 exec xmonad
