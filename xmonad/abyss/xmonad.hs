@@ -2,11 +2,14 @@ import Data.Monoid
 import System.Exit
 import System.IO
 
+import Graphics.X11.ExtraTypes.XF86
+
 import XMonad
 import XMonad.Actions.CycleWindows
 import XMonad.Actions.CycleWS
 import XMonad.Actions.MouseGestures
 import XMonad.Actions.PhysicalScreens
+import XMonad.Config.Desktop
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
@@ -20,6 +23,7 @@ import XMonad.Util.NamedScratchpad
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Renamed
+import XMonad.Layout.Spacing
 import XMonad.Layout.Tabbed
 
 import qualified XMonad.Actions.FlexibleResize as Flex
@@ -29,8 +33,7 @@ import qualified Data.Map        as M
 
 main = do
   statusBar <- spawnPipe statusBar'
-  statusBar2 <- spawnPipe statusBar2'
-  xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
+  xmonad $ withUrgencyHook NoUrgencyHook $ desktopConfig
     { terminal = terminal'
     , modMask = modMask'
     , workspaces = workspaces'
@@ -48,11 +51,11 @@ main = do
 -- hooks
 
 manageScratchPad :: ManageHook
-manageScratchPad = scratchpadManageHook (W.RationalRect (1/3) (1/3) (1/3) (1/3))
+manageScratchPad = scratchpadManageHook (W.RationalRect (1/6) (1/6) (2/3) (2/3))
 scratchPad = scratchpadSpawnActionCustom "termite --name=scratchpad"
 
 manageHook' :: ManageHook
-manageHook' = (doF W.swapDown) <+> manageHook defaultConfig <+> manageDocks <+> manageScratchPad <+> manageFloats
+manageHook' = (doF W.swapDown) <+> manageHook desktopConfig <+> manageDocks <+> manageScratchPad <+> manageFloats
 
 logHook' :: Handle -> X ()
 logHook' h = dynamicLogWithPP $ customPP { ppOutput = hPutStrLn h }
@@ -61,33 +64,41 @@ layoutHook' = customLayout
 
 startupHook' = setWMName "LG3D"
 
-manageFloats = composeAll [ isFullscreen --> doFullFloat
+manageFloats = composeAll [ isDialog --> doCenterFloat'
+                          , isFullscreen --> doFullFloat
                           , className =? "MPlayer" --> doFloat
                           , className =? "mplayer2" --> doFloat
                           , className =? "Gimp" --> doFloat
                           , className =? "dev" --> doFloat
+                          , className =? "MyGdxGame" --> doFloat
                           , insertPosition Below Newer
                           ]
+  where
+    doMaster = doF W.shiftMaster
+    doCenterFloat' = doCenterFloat <+> doMaster
 
 -----------------------------------------------------------------------------------
 -- looks
 
-statusBar' = "dzen2 -xs 1 -y '0' -w '800' -ta 'l'" ++ dzenStyle
-dzenStyle  = " -h '16' -fg '#888888' -bg '#151515' -fn 'Montecarlo-10'"
+statusBar' = "xmobar ~/.xmonad/xmobarrc"
+--statusBar' = "dzen2 -xs 1 -y '0' -w '800' -ta 'l'" ++ dzenStyle
+--dzenStyle  = " -h '16' -fg '#888888' -bg '#151515' -fn 'Montecarlo-10'"
 
-statusBar2' = "bash /home/dan/dotfiles/xmonad/abyss/statusbar.sh"
+-- statusBar2' = "bash /home/dan/dotfiles/xmonad/abyss/statusbar.sh"
 
 customPP :: PP
-customPP = defaultPP { ppCurrent = dzenColor "#dddddd" ""
-                     , ppVisible = dzenColor "#888888" "" . wrap "-" "-"
-                     , ppTitle = dzenColor "#747474" "" . shorten 90
-                     , ppLayout = dzenColor "#747474" ""
-                     , ppSep = dzenColor "#444444" "" " | "
-                     , ppUrgent = dzenColor "#FFFFAF" "" . wrap "[" "]"
+customPP = defaultPP { ppCurrent = xmobarColor "#dddddd" ""
+                     , ppVisible = xmobarColor "#888888" "" . wrap "-" "-"
+                     , ppTitle = xmobarColor "#747474" ""
+                     , ppLayout = xmobarColor "#747474" ""
+                     , ppSep = xmobarColor "#444444" "" " | "
+                     , ppUrgent = xmobarColor "#FFFFAF" "" . wrap "[" "]"
                      }
 
 borderWidth' :: Dimension
-borderWidth' = 0
+borderWidth' = 2
+
+gapWidth' = 10
 
 normalBorderColor', focusedBorderColor' :: String
 normalBorderColor' = "#1c1c1c"
@@ -98,8 +109,8 @@ workspaces' = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
 -----------------------------------------------------------------------------------
 -- Layouts 
-tiled = renamed [Replace "[]=" ] $ smartBorders $ ResizableTall 1 (2/100) (1/2) []
-mtiled = renamed [Replace "=[]"] $ smartBorders $ Mirror tiled
+tiled = renamed [Replace "[]=" ] $ smartSpacing gapWidth' $ smartBorders $ ResizableTall 1 (2/100) (1/2) []
+mtiled = renamed [Replace "=[]"] $ smartSpacing gapWidth' $ smartBorders $ Mirror tiled
 full = renamed [Replace "[]"] $ noBorders Full
 tab = renamed [Replace "T"] $ noBorders $ tabbed shrinkText tabTheme1
 
@@ -142,6 +153,12 @@ keys' conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- shortcuts
     , ((modm, xK_f), spawn "firefox")
     , ((modm, xK_s), spawn "spotify")
+
+    -- spotify controls
+    , ((0, xF86XK_AudioPlay), spawn "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause")
+    , ((0, xF86XK_AudioNext), spawn "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next")
+    , ((0, xF86XK_AudioPrev), spawn "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous")
+
     , ((modm, xK_F11), spawn "setxkbmap -layout se")
     , ((modm, xK_F12), spawn "setxkbmap -layout us")
 

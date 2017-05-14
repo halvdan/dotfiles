@@ -1,18 +1,17 @@
-Config { font = "-*-terminus2-medium-r-*-*-12-*-*-*-*-*-*-*"
-       , bgColor = "black"
+Config { bgColor = "black"
        , fgColor = "white"
-       , position = Top
+       , position = TopW L 90
        , lowerOnStart = True
        , commands = [ Run Date "<fc=#747474>%a %d %b %Y</fc>  %H:%M" "date" 10
-                    , Run Com "~/scripts/xmobar/battery.sh" [] "battery" 600
-                    , Run Com "~/scripts/xmobar/volume.sh" [] "volume" 10
-                    , Run Com "~/scripts/xmobar/dropbox.sh" [] "dropbox" 30
-                    , Run Com "~/scripts/xmobar/spotrunning.sh" [] "spotify" 100
-                    , Run Com "~/scripts/xmobar/mpdplaying.sh" [] "nowplaying" 100
-                    , Run Com "~/scripts/xmobar/networkssid.sh" [] "ssid" 1000
+                    --, Run Com "~/scripts/xmobar/battery.sh" [] "battery" 600
+                    --, Run Com "~/scripts/xmobar/volume.sh" [] "volume" 10
+                    --, Run Com "~/scripts/xmobar/dropbox.sh" [] "dropbox" 30
+                    --, Run Com "~/scripts/xmobar/spotrunning.sh" [] "spotify" 100
+                    --, Run Com "~/scripts/xmobar/mpdplaying.sh" [] "nowplaying" 100
+                    --, Run Com "~/scripts/xmobar/networkssid.sh" [] "ssid" 1000
                     , Run StdinReader 
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% } %nowplaying% { %ssid% %spotify% %dropbox% %volume% %battery% <fc=#C70404>|</fc> %date% "
+       , template = "%StdinReader% }{ %date% "
        }
